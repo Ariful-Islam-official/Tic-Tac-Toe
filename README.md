@@ -1,26 +1,32 @@
 # Tic Tac Toe Game
 
-This project is a simple **Tic Tac Toe game** built using HTML, CSS, and JavaScript. The game includes a user-friendly interface and allows two players to play alternately. The game announces the winner and provides an option to reset or start a new game.
-
-## Features
-- Two-player functionality with alternating turns.
-- Highlights the winning player.
-- Allows resetting the game board.
-- Responsive design for a better user experience.
-
-## Table of Contents
-1. [HTML Code](#html-code)
-2. [CSS Code](#css-code)
-3. [JavaScript Code](#javascript-code)
-4. [Explanation](#explanation)
-   - [HTML Structure](#html-structure)
-   - [CSS Styling](#css-styling)
-   - [JavaScript Logic](#javascript-logic)
-5. [How to Run](#how-to-run)
+A fun and interactive Tic Tac Toe game built using **HTML**, **CSS**, and **JavaScript**. This game supports two players (Player X and Player O) and includes features like a reset button and winner detection.
 
 ---
 
-## HTML Code
+## Table of Contents
+
+- [HTML Structure](#html-structure)
+- [CSS Styling](#css-styling)
+- [JavaScript Logic](#javascript-logic)
+  - [Selecting DOM Elements](#selecting-dom-elements)
+  - [Player Turns](#player-turns)
+  - [Winning Logic](#winning-logic)
+  - [Resetting the Game](#resetting-the-game)
+
+---
+
+## HTML Structure
+
+The HTML structure defines the layout of the game, including the game board and control buttons.
+
+### Why this structure?
+- **Semantic Elements**: Using `<main>` and `<button>` ensures the structure is clear and accessible.
+- **Dynamic Elements**: Buttons are used for each game cell, enabling interaction.
+- **Message Container**: Displays the winner and options for starting a new game.
+
+### Code
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -56,19 +62,20 @@ This project is a simple **Tic Tac Toe game** built using HTML, CSS, and JavaScr
 </body>
 </html>
 ```
-### Explanation
-1. **`<head>`**:
-   - Includes metadata, title, and a link to the external CSS file.
-2. **Message Container (`div.msg-container`)**:
-   - Displays the winning message and a button for starting a new game.
-3. **Game Board (`div.game`)**:
-   - Contains 9 buttons representing the Tic Tac Toe grid.
-4. **Reset Button (`#reset`)**:
-   - Resets the game without a winning message.
 
 ---
 
-## CSS Code
+## CSS Styling
+
+CSS is used to style the game layout, making it visually appealing and responsive.
+
+### Why this styling?
+- **Flexbox**: Ensures that elements are centered and responsive.
+- **Box Styling**: Each game cell has a shadow and rounded corners for better aesthetics.
+- **Colors**: Distinct background and font colors for contrast and clarity.
+
+### Code
+
 ```css
 * {
     margin: 0;
@@ -102,7 +109,16 @@ body {
     font-size: 8vmin;
     color: #b0413e;
 }
-#reset, #new {
+#reset {
+    border-radius: 0.5rem;
+    padding: 20px;
+    border: none;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+    font-size: 2vmin;
+    font-weight: bold;
+    color: #000000;
+}
+#new {
     border-radius: 0.5rem;
     padding: 20px;
     border: none;
@@ -127,32 +143,29 @@ body {
     display: none;
 }
 ```
-### Explanation
-1. **Global Styles**:
-   - Reset margins and padding for all elements.
-2. **Body Styling**:
-   - Background color and centered text.
-3. **Game Grid**:
-   - Flexbox layout for aligning buttons.
-   - Styling for buttons with shadows and rounded corners.
-4. **Message Container**:
-   - Flexbox for centering the message.
 
 ---
 
-## JavaScript Code
-```javascript
-let boxes = document.querySelectorAll(".box");
-let resetBtn = document.querySelector("#reset");
-let newGameBtn = document.querySelector("#new");
-let msgContainer = document.querySelector(".msg-container");
-let msg = document.querySelector("#msg");
+## JavaScript Logic
 
-let turnO = true;
-let winPatterns = [
-    [0, 1, 2], [0, 3, 6], [0, 4, 8], [1, 4, 7],
-    [2, 5, 8], [2, 4, 6], [3, 4, 5], [6, 7, 8]
-];
+JavaScript handles the game logic, including player turns, winner detection, and resetting the game.
+
+### Selecting DOM Elements
+- **Why?** To interact with the HTML elements and update the game dynamically.
+
+```javascript
+let boxes = document.querySelectorAll(".box") // Multiple box selected at one time
+let resetBtn = document.querySelector("#reset")
+let newGameBtn = document.querySelector("#new")
+let msgContainer = document.querySelector(".msg-container")
+let msg = document.querySelector("#msg")
+```
+
+### Player Turns
+- **Why?** Alternates turns between Player X and Player O.
+
+```javascript
+let turnO = true; // Player X, player O
 
 boxes.forEach((box) => {
     box.addEventListener("click", () => {
@@ -167,6 +180,22 @@ boxes.forEach((box) => {
         checkWinner();
     });
 });
+```
+
+### Winning Logic
+- **Why?** Checks all winning patterns to determine the winner.
+
+```javascript
+let winPatterns = [
+    [0, 1, 2],
+    [0, 3, 6],
+    [0, 4, 8],
+    [1, 4, 7],
+    [2, 5, 8],
+    [2, 4, 6],
+    [3, 4, 5],
+    [6, 7, 8],
+];
 
 const checkWinner = () => {
     for (let pattern of winPatterns) {
@@ -187,47 +216,31 @@ const showWinner = (winner) => {
     msgContainer.classList.remove("hide");
     disableBoxes();
 };
+```
 
+### Resetting the Game
+- **Why?** Clears the board and starts a new game.
+
+```javascript
 const disableBoxes = () => {
-    boxes.forEach((box) => box.disabled = true);
+    for (let box of boxes) {
+        box.disabled = true;
+    }
 };
 
 const enableBoxes = () => {
-    boxes.forEach((box) => {
+    for (let box of boxes) {
         box.disabled = false;
         box.innerText = "";
-    });
+    }
 };
 
-const resetGame = () => {
+const restGame = () => {
     turnO = true;
     enableBoxes();
     msgContainer.classList.add("hide");
 };
 
-resetBtn.addEventListener("click", resetGame);
-newGameBtn.addEventListener("click", resetGame);
+resetBtn.addEventListener("click", restGame);
+newGameBtn.addEventListener("click", restGame);
 ```
-### Explanation
-1. **Selecting Elements**:
-   - Use `querySelector` and `querySelectorAll` to get DOM elements like boxes, reset button, and message container.
-2. **Turn Management**:
-   - Use a `turnO` boolean to alternate between `O` and `X` turns.
-3. **Check Winner**:
-   - Loop through predefined winning patterns.
-   - Check if three boxes in any pattern contain the same value.
-4. **Display Winner**:
-   - Show a congratulatory message and disable all boxes.
-5. **Reset Game**:
-   - Clear all boxes, reset turns, and hide the message container.
-
----
-
-## How to Run
-1. Save the provided code into three separate files:
-   - `index.html`
-   - `style.css`
-   - `tic_tac.js`
-2. Open the `index.html` file in your browser.
-3. Play the game by clicking on the boxes and alternating turns.
-4. Use the **Reset** or **New Game** button to restart the game.
