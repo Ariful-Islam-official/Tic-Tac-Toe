@@ -30,36 +30,36 @@ The HTML structure defines the layout of the game, including the game board and 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe Game</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic-Tac-Toe Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="msg-container hide">
-        <p id="msg"></p>
-        <button id="new">New Game</button>
+      <p id="msg">Winner</p>
+      <button id="new-btn">New Game</button>
     </div>
     <main>
-        <h1>Tic Tac Toe</h1>
-        <div class="container">
-            <div class="game">
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-            </div>
+      <h1>Tic Tac Toe</h1>
+      <div class="container">
+        <div class="game">
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
         </div>
-        <button id="reset">Reset Game</button>
+      </div>
+      <button id="reset-btn">Reset Game</button>
     </main>
     <script src="tic_tac.js"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -80,18 +80,22 @@ CSS is used to style the game layout, making it visually appealing and responsiv
 * {
     margin: 0;
     padding: 0;
-}
-body {
+  }
+  
+  body {
     background-color: #548687;
     text-align: center;
-}
-.container {
+  }
+  
+  .container {
     height: 70vh;
     display: flex;
+  
     justify-content: center;
     align-items: center;
-}
-.game {
+  }
+  
+  .game {
     height: 60vmin;
     width: 60vmin;
     display: flex;
@@ -99,8 +103,9 @@ body {
     justify-content: center;
     align-items: center;
     gap: 1.5vmin;
-}
-.box {
+  }
+  
+  .box {
     height: 18vmin;
     width: 18vmin;
     border-radius: 1rem;
@@ -108,40 +113,45 @@ body {
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
     font-size: 8vmin;
     color: #b0413e;
-}
-#reset {
-    border-radius: 0.5rem;
-    padding: 20px;
+    background-color: #ffffc7;
+  }
+  
+  #reset-btn {
+    padding: 1rem;
+    font-size: 1.25rem;
+    background-color: #191913;
+    color: #fff;
+    border-radius: 1rem;
     border: none;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
-    font-size: 2vmin;
-    font-weight: bold;
-    color: #000000;
-}
-#new {
-    border-radius: 0.5rem;
-    padding: 20px;
+  }
+  
+  #new-btn {
+    padding: 1rem;
+    font-size: 1.25rem;
+    background-color: #191913;
+    color: #fff;
+    border-radius: 1rem;
     border: none;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
-    font-size: 2vmin;
-    font-weight: bold;
-    color: #000000;
-}
-#msg {
-    color: white;
+  }
+  
+  #msg {
+    color: #ffffc7;
     font-size: 5vmin;
-}
-.msg-container {
+  }
+  
+  .msg-container {
     height: 100vmin;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 4rem;
-}
-.hide {
+  }
+  
+  .hide {
     display: none;
-}
+  }
+  
 ```
 
 ---
@@ -154,11 +164,11 @@ JavaScript handles the game logic, including player turns, winner detection, and
 - **Why?** To interact with the HTML elements and update the game dynamically.
 
 ```javascript
-let boxes = document.querySelectorAll(".box") // Multiple box selected at one time
-let resetBtn = document.querySelector("#reset")
-let newGameBtn = document.querySelector("#new")
-let msgContainer = document.querySelector(".msg-container")
-let msg = document.querySelector("#msg")
+let boxes = document.querySelectorAll(".box");
+let resetBtn = document.querySelector("#reset-btn");
+let newGameBtn = document.querySelector("#new-btn");
+let msgContainer = document.querySelector(".msg-container");
+let msg = document.querySelector("#msg");
 ```
 
 ### Player Turns
